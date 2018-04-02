@@ -2,4 +2,4 @@
 My submissions playing with https://www.drivendata.org/
 
 ## Usage
-`pew new -r requirements.txt DRIVENDATA_SUBMISSIONS`
+`pew new -r requirements.txt --python=python DRIVENDATA_SUBMISSIONS`
