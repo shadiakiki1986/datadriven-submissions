@@ -54,6 +54,7 @@ Operating_Status:
 - Non-Operating
 - Operating, Not PreK-12
 - PreK-12 Operating
+- NO_LABEL # missing in original
 
 Position_Type:
 - (Exec) Director
