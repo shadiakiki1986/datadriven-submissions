@@ -19,3 +19,9 @@ Keras==2.1.5
 tensorflow==1.7.0
 matplotlib==2.2.2
 seaborn==0.8.1
+
+# more
+Cython
+# version 0.3 has bug in predict_proba
+# auto-sklearn # requires sudo apt-get install build-essential swig
+git+https://github.com/automl/auto-sklearn.git

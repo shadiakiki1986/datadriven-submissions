@@ -1,4 +1,4 @@
-.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3
+.PHONY: clean data lint requirements sync_data_to_s3 sync_data_from_s3 jupyter
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -78,6 +78,9 @@ test_environment:
 # PROJECT RULES                                                                 #
 #################################################################################
 
+## start jupyter server
+jupyter:
+	jupyter notebook --no-browser --port=3000 --ip=0.0.0.0 --notebook-dir=./notebooks
 
 
 #################################################################################
@@ -140,3 +143,5 @@ show-help:
 		printf "\n"; \
 	}' \
 	| more $(shell test $(shell uname) = Darwin && echo '--no-init --raw-control-chars')
+
+

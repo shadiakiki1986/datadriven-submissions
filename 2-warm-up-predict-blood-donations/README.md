@@ -55,3 +55,27 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+
+
+
+
+Usage
+-----
+
+Creation of project
+
+    cd drivendata-submissions
+    pew new DRIVEN_2
+    pip install cookiecutter
+    cookiecutter https://github.com/drivendata/cookiecutter-data-science
+    # type in name of folder: 2-warmup-...
+
+
+Usage of project
+
+    make # display help
+    make sync_data_from_s3
+    make requirements
+    make jupyter
+
