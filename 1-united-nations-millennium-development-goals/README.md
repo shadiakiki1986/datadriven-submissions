@@ -72,10 +72,14 @@ Creation of project
     # type in name of folder: 1-united-...
 
 
-Usage of project
+First usage of project
 
     make # display help
     make sync_data_from_s3
+    make create_environment
     make requirements
-    make jupyter
 
+Subsequent usage
+
+    pew workon 1-united-nations-millennium-development-goals
+    make jupyter
