@@ -77,6 +77,7 @@ First usage of project
     make # display help
     make sync_data_from_s3
     make create_environment
+    pip install numpy Cython # needed for auto-sklearn in requirements.txt
     make requirements
 
 Subsequent usage
