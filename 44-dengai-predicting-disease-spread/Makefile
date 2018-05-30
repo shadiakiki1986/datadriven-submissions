@@ -48,10 +48,10 @@ endif
 
 ## Download Data from S3
 sync_data_from_s3:
-	curl -o data/raw/ https://s3.amazonaws.com/drivendata/data/44/public/dengue_features_train.csv
-	curl -o data/raw/ https://s3.amazonaws.com/drivendata/data/44/public/dengue_labels_train.csv
-	curl -o data/raw/ https://s3.amazonaws.com/drivendata/data/44/public/dengue_features_test.csv
-	curl -o data/raw/ https://s3.amazonaws.com/drivendata/data/44/public/submission_format.csv
+	curl -o data/raw/dengue_features_train.csv https://s3.amazonaws.com/drivendata/data/44/public/dengue_features_train.csv
+	curl -o data/raw/dengue_labels_train.csv   https://s3.amazonaws.com/drivendata/data/44/public/dengue_labels_train.csv
+	curl -o data/raw/dengue_features_test.csv  https://s3.amazonaws.com/drivendata/data/44/public/dengue_features_test.csv
+	curl -o data/raw/submission_format.csv     https://s3.amazonaws.com/drivendata/data/44/public/submission_format.csv
 
 ## Set up python interpreter environment
 create_environment:
