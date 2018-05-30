@@ -3,6 +3,16 @@
 
 solution to drivendata.org competition 2
 
+Competition 2: Warm up: Predict blood donations
+
+Started following the data science cookiecutter templates [here](http://drivendata.github.io/cookiecutter-data-science/)
+```
+cd 2-warm-up-predict-blood-donations
+pew new -r requirements.txt --python=python DRIVENDATA_SUBMISSIONS_2
+make
+```
+
+
 Project Organization
 ------------
 
@@ -79,3 +89,9 @@ Usage of project
     make requirements
     make jupyter
 
+
+Results
+-------
+In the end, the ground truth data turned out to already be published, and someone found it and published to get top results on the leaderboard. He was fair though by publishing it on the forum too.
+
+The results here were not so great, and my rank was horrible in the 1000's, but that's only because everyone was in the same ballpark. When I felt there was not much to learn from this, I just stopped and moved on.

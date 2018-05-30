@@ -84,3 +84,16 @@ Subsequent usage
 
     pew workon 1-united-nations-millennium-development-goals
     make jupyter
+
+
+Results
+-------
+Using ML RF didn't get me anywhere in this.
+
+I tried to reshape the data similar to my previous project with http://gsquaredcapital.com/ but it didn't improve the published result on the leaderboard.
+
+The most successful model was simply an auto-regression using only the features that are to be predicted. Using the set `(t-1, t-2, t-3, ...)` resulted in better scores than just `(t-1)`.
+
+I'm not sure how I could have applied ML here.
+
+Feature reduction was unstable because the time dimension is only 36 samples long (36 years).
