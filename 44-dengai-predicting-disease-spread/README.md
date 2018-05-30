@@ -73,8 +73,8 @@ First usage of project
 
 Subsequent usage
 
-    pew workon 1-united-nations-millennium-development-goals
-    make jupyter
+    pew workon 44-dengai-predicting-disease-spread
+    sudo pew in 44-dengai-predicting-disease-spread make jupyter # sudo for https
 
 
 Results
