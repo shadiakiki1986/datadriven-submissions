@@ -8,3 +8,4 @@ Here is the chronological order of competitions tackled
 - 46-box-plots for education
 - 2-blood donations
 - 1-UN millenium development goals
+- 44-disease-prediction
