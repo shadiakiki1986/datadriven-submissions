@@ -88,3 +88,11 @@ The most successful model was simply an auto-regression using only the features 
 I'm not sure how I could have applied ML here.
 
 Feature reduction was unstable because the time dimension is only 36 samples long (36 years).
+
+
+Edit:
+
+- tried lasso feature selection then RF or linear ... no good
+- LSTM with lookback and data having seasonality in notebook 4.0 got me to score 22
+- LSTM with deseasoned didn't do as well
+- perhaps I should look at classification problem instead of regression
