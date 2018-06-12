@@ -27,3 +27,7 @@ Cython
 # version 0.3 has bug in predict_proba
 # auto-sklearn # requires sudo apt-get install build-essential swig
 git+https://github.com/automl/auto-sklearn.git
+
+
+# to download files
+kaggle==1.3.10

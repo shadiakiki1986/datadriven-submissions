@@ -7,6 +7,9 @@ Identify hand motions from EEG recordings
 
 https://www.kaggle.com/c/grasp-and-lift-eeg-detection/
 
+This competition was selected from https://github.com/dmlc/xgboost/tree/master/demo
+because it was a regression from time series features
+
 Project Organization
 ------------
 
@@ -68,10 +71,15 @@ Creation of project
 First usage of project
 
     make # display help
-    make sync_data_from_s3
+
     make create_environment
     pip install numpy Cython # needed for auto-sklearn in requirements.txt
     make requirements
+
+    # get kaggle API token as described https://github.com/Kaggle/kaggle-api#api-credentials
+    # accept competition rules from https://www.kaggle.com/c/grasp-and-lift-eeg-detection/rules
+    # make sure there is at least 5 GB of space
+    make sync_data_from_s3 # requires kaggle api token above
 
 Subsequent usage
 

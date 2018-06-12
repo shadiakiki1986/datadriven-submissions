@@ -1,3 +1,6 @@
 .*swp
 *.csv
 *.csv.zip
+*.zip
+*.pkl
+.ipynb_checkpoints

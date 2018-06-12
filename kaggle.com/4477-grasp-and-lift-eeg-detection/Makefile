@@ -48,9 +48,10 @@ endif
 
 ## Download Data from S3
 sync_data_from_s3:
-	curl -o data/raw/sample_submission.csv.zip https://www.kaggle.com/c/4477/download/sample_submission.csv.zip && unzip data/raw/sample_submission.csv.zip
-	curl -o data/raw/test.zip https://www.kaggle.com/c/4477/download/test.zip && unzip data/raw/test.zip
-	curl -o data/raw/train.zip https://www.kaggle.com/c/4477/download/train.zip && unzip data/raw/train.zip
+	kaggle competitions download -c grasp-and-lift-eeg-detection -p data/raw/
+	unzip -d data/raw/ data/raw/sample_submission.csv.zip
+	unzip -d data/raw/ data/raw/train.zip
+	unzip -d data/raw/ data/raw/test.zip
 
 ## Set up python interpreter environment
 create_environment:
