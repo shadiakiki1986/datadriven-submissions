@@ -5,6 +5,8 @@ solution to kaggle.com competition
 
 Identify hand motions from EEG recordings
 
+https://www.kaggle.com/c/grasp-and-lift-eeg-detection/
+
 Project Organization
 ------------
 
