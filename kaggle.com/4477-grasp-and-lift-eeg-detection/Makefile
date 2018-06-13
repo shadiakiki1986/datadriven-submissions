@@ -71,7 +71,8 @@ test_environment:
 
 ## start jupyter server
 jupyter:
-	jupyter notebook --no-browser --port=3000 --ip=0.0.0.0 --notebook-dir=./notebooks --keyfile=/etc/letsencrypt/live/anis-quant.net/privkey.pem --certfile=/etc/letsencrypt/live/anis-quant.net/cert.pem --allow-root
+#	jupyter notebook --no-browser --port=3000 --ip=0.0.0.0 --notebook-dir=./notebooks --keyfile=/etc/letsencrypt/live/anis-quant.net/privkey.pem --certfile=/etc/letsencrypt/live/anis-quant.net/cert.pem --allow-root
+	jupyter notebook --no-browser --port=3000 --ip=0.0.0.0 --notebook-dir=./notebooks
 
 
 #################################################################################

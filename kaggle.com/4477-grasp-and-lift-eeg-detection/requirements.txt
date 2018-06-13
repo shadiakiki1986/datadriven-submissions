@@ -25,8 +25,9 @@ h5py
 # more
 Cython
 # version 0.3 has bug in predict_proba
+# 2018-06-12 disable for now due to https://github.com/automl/auto-sklearn/issues/101
 # auto-sklearn # requires sudo apt-get install build-essential swig
-git+https://github.com/automl/auto-sklearn.git
+# git+https://github.com/automl/auto-sklearn.git
 
 
 # to download files

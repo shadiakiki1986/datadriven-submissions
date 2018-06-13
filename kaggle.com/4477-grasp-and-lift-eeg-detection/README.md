@@ -75,6 +75,7 @@ First usage of project
     make create_environment
     pip install numpy Cython # needed for auto-sklearn in requirements.txt
     make requirements
+    pip install tensorflow-gpu # for GPU support
 
     # get kaggle API token as described https://github.com/Kaggle/kaggle-api#api-credentials
     # accept competition rules from https://www.kaggle.com/c/grasp-and-lift-eeg-detection/rules
