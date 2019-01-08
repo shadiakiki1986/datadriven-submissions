@@ -1,5 +1,5 @@
 # pew new openai_gym
-# pip install gym pandas matplotlib
+# pip install gym pandas (strike: matplotlib)
 # python 02_scripted.py
 #---------------------------
 
