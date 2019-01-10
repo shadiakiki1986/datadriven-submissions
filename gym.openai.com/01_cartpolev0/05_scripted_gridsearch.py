@@ -1,6 +1,12 @@
-# pew new openai_gym
-# pip install gym pandas (strike: matplotlib)
-# python 02_scripted.py
+"""
+General
+Grid search on optimal parameters for the scripted Controller
+
+Dev notes
+pew new openai_gym
+pip install gym pandas (strike: matplotlib)
+python 02_scripted.py
+"""
 #---------------------------
 
 import gym
@@ -188,7 +194,7 @@ obs_limits['stat'] = np.nan
 for settings_i, settings_val in obs_limits.iterrows():
   print(time.ctime(), "settings", settings_i, obs_limits.shape[0])
 
-  game_score = np.full([3,], np.nan )
+  game_score = np.full([6], np.nan )
   for game_i in range(game_score.shape[0]):
     # print("\tGame", game_i)
 
@@ -249,3 +255,15 @@ for settings_i, settings_val in obs_limits.iterrows():
 
 import pdb
 pdb.set_trace()
+
+print("best combination is")
+# print(obs_limits.loc[obs_limits['stat'].idxmax()]) # doesn't work in multiple max case
+print(obs_limits.loc[(obs_limits['stat'] == obs_limits['stat'].max())])
+
+obs_limits.to_csv("05_obs_limits.csv", index=False)
+#---------------------------------
+#obs_limits_p1 = pd.read_csv("05_obs_limits_20190110T1600_p1.csv")
+#obs_limits_both = obs_limits.merge(obs_limits_p1, on=["cart_position", "cart_velocity", "pole_angle"], suffixes=["_p2", "_p1"])
+#obs_limits_both["stat"] = obs_limits_both["stat_p1"] + obs_limits_both["stat_p2"]
+#print(obs_limits_both.loc[(obs_limits_both['stat'] == obs_limits_both['stat'].max())])
+
