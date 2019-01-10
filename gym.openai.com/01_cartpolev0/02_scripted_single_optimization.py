@@ -28,7 +28,7 @@ observation_all = pd.DataFrame({
 })
 
 for _ in range(1000):
-    #print(_, 1000)
+    print(_, 1000)
     # env.render()
 
     # choose action (check docs link above for more details)
