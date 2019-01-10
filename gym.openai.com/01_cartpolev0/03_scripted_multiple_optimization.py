@@ -61,7 +61,10 @@ observation_all.columns=[
   ]
 
 # array of thresholds to check iteratively
-obs_limits = {"cart_position": 2.4, "cart_velocity": 2, "pole_angle": 12, }
+# Even though the limit for pole angle is 12, need to set the threshold to 6 to maintain control
+# Also, cart velocity doesn't have a specific limit, so trial and error choosing 4
+# obs_limits = {"cart_position": 2.4, "cart_velocity": 2, "pole_angle": 12, }
+obs_limits = {"cart_position": 2.4, "cart_velocity": 3, "pole_angle": 6, }
 
 # convenient variable names
 action_left = 0
@@ -69,18 +72,24 @@ action_right = 1
 
 def pa_to_action(observation_all, ol_series):
   msg2 = ""
-  # pa_diff = observation_all["pole_angle"].tail(n=2)
-  pa_diff = observation_all["pole_angle"].loc[[ol_series.name-1,ol_series.name]]
-  pa_diff = pa_diff.diff().values[-1]
-  if (pa_diff * ol_series["pole_angle"]) > 0:
-      msg2 = " but it's not improving yet"
-      if ol_series["pole_angle"] < 0:
-          action_todo = action_left
-      else:
-          action_todo = action_right
+
+  ## pa_diff = observation_all["pole_angle"].tail(n=2)
+  #pa_diff = observation_all["pole_angle"].loc[[ol_series.name-1,ol_series.name]]
+  #pa_diff = pa_diff.diff().values[-1]
+  #if (pa_diff * ol_series["pole_angle"]) > 0:
+  #    msg2 = " but it's not improving yet"
+  #    if ol_series["pole_angle"] < 0:
+  #        action_todo = action_left
+  #    else:
+  #        action_todo = action_right
+  #else:
+  #    # and it's already improving
+  #    action_todo = np.nan
+
+  if ol_series["pole_angle"] < 0:
+      action_todo = action_left
   else:
-      # and it's already improving
-      action_todo = np.nan
+      action_todo = action_right
 
   return action_todo, msg2
 
@@ -209,6 +218,7 @@ for _ in range(1000):
     #pdb.set_trace()
     if done:
         print("game over", _, 1000)
+        print("You win" if _+1 == 200 else "You lose")
         break
 
 if False:
