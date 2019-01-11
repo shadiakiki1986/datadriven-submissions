@@ -172,7 +172,8 @@ class Controller:
 #-----------------------------------------------------------------
 
 # stats per parameter combination
-def make_index(y): return [str(round(x,1)) for x in y]
+def my_round(x): return round(x,1)
+def make_index(y): return [str(my_round(x)) for x in y]
 
 obs_limits = pd.DataFrame(
   np.array(np.meshgrid(
@@ -193,9 +194,9 @@ import math
 def run_game_scoring(settings_ndarray):
 
   settings_val = {
-    "cart_position": round(settings_ndarray[0]),
-    "cart_velocity": round(settings_ndarray[1]),
-    "pole_angle": round(settings_ndarray[2]),
+    "cart_position": my_round(settings_ndarray[0]),
+    "cart_velocity": my_round(settings_ndarray[1]),
+    "pole_angle": my_round(settings_ndarray[2]),
   }
   print(time.ctime(), "run game scoring", settings_val)
 
