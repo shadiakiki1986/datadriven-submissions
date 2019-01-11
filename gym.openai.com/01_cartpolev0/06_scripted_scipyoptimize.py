@@ -6,6 +6,16 @@ Dev notes
 pew new openai_gym
 pip install gym pandas (strike: matplotlib)
 python 02_scripted.py
+
+Result
+Fri Jan 11 04:02:09 2019 run game scoring {'pole_angle': 4.0, 'cart_velocity': 2.8, 'cart_position': 2.8}
+*** Found in cache 20.0
+Warning: Desired error not necessarily achieved due to precision loss.
+         Current function value: -20.000000
+         Iterations: 1
+         Function evaluations: 422
+         Gradient evaluations: 82
+
 """
 #---------------------------
 
@@ -268,7 +278,7 @@ def run_game_scoring(settings_ndarray):
       #import pdb
       #pdb.set_trace()
       if done:
-        # print("\t\tgame over", game_i, "/", _, 1000, "/", "You win" if _+1 == 200 else "You lose")
+        print("\t\tgame over", game_i, ",", _, 1000, ",", "You win" if _+1 == 200 else "You lose", ", reward", reward)
         game_score[game_i] = True if _+1 == 200 else False
         break
 
