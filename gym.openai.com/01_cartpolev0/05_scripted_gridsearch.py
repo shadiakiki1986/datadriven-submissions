@@ -174,11 +174,11 @@ class Controller:
 # Also, cart velocity doesn't have a specific limit, so trial and error choosing 4
 # obs_limits = {"cart_position": 2.4, "cart_velocity": 2, "pole_angle": 12, }
 # obs_limits = {"cart_position": 2.4, "cart_velocity": 3, "pole_angle": 6, }
-obs_limits = pd.DataFrame({
-  "cart_position": np.arange(0,5,.1),
-  "cart_velocity": np.arange(0,5,.1),
-  "pole_angle": np.arange(0,12,.2)[:50],
-})
+#obs_limits = pd.DataFrame({
+#  "cart_position": np.arange(0,5,.1),
+#  "cart_velocity": np.arange(0,5,.1),
+#  "pole_angle": np.arange(0,12,.2)[:50],
+#})
 
 obs_limits = pd.DataFrame(
   np.array(np.meshgrid(

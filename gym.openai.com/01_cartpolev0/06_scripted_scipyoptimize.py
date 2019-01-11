@@ -171,42 +171,60 @@ class Controller:
 
 #-----------------------------------------------------------------
 
-# array of thresholds to check iteratively
-# Even though the limit for pole angle is 12, need to set the threshold to 6 to maintain control
-# Also, cart velocity doesn't have a specific limit, so trial and error choosing 4
-# obs_limits = {"cart_position": 2.4, "cart_velocity": 2, "pole_angle": 12, }
-# obs_limits = {"cart_position": 2.4, "cart_velocity": 3, "pole_angle": 6, }
-obs_limits = pd.DataFrame({
-  "cart_position": np.arange(0,5,.1),
-  "cart_velocity": np.arange(0,5,.1),
-  "pole_angle": np.arange(0,12,.2)[:50],
-})
+# stats per parameter combination
+def make_index(y): return [str(round(x,1)) for x in y]
 
 obs_limits = pd.DataFrame(
   np.array(np.meshgrid(
-    np.arange(1,5,1),
-    np.arange(1,5,1),
-    np.arange(1,12,1)[:5],
+    make_index(np.arange(1,10,.1)),
+    make_index(np.arange(1,10,.1)),
+    make_index(np.arange(1,10,.1))
   )).T.reshape(-1,3),
   columns=["cart_position", "cart_velocity", "pole_angle"]
 )
 obs_limits['stat'] = np.nan
-# obs_limits = obs_limits.head(n=4)
+obs_limits.set_index(["cart_position", "cart_velocity", "pole_angle"], inplace=True)
 
 #-----------------------------------------------------------------
 
-def run_game_scoring(settings_ndarray):
-  settings_val = {"cart_position": settings_ndarray[0], "cart_velocity": settings_ndarray[1], "pole_angle": settings_ndarray[2]}
-  print("run game scoring", settings_val)
+import math
 
+# around 40 seconds per 20-game tour
+def run_game_scoring(settings_ndarray):
+
+  settings_val = {
+    "cart_position": round(settings_ndarray[0]),
+    "cart_velocity": round(settings_ndarray[1]),
+    "pole_angle": round(settings_ndarray[2]),
+  }
+  print(time.ctime(), "run game scoring", settings_val)
+
+  # reject negatives
   if settings_val["cart_position"] <= 0: return 0
   if settings_val["cart_velocity"] <= 0: return 0
   if settings_val["pole_angle"] <= 0: return 0
 
-  n_games = 1 # 6
+  # stick to points we have in the mesh grid
+  # https://stackoverflow.com/a/48382169/4126114
+  settings_idx = make_index(settings_ndarray)
+  if not obs_limits.index.isin([settings_idx]).any():
+    return 0
+
+  # if already calculated, return from cache
+  cached_val = obs_limits.loc[settings_idx[0], settings_idx[1], settings_idx[2]]["stat"]
+  if pd.notnull(cached_val):
+    print("*** Found in cache", cached_val)
+    return cached_val
+
+  # number of games to play in order to judge the quality of the parameters
+  # This is a very very important argument in the scoring because the larger it is,
+  # the more "reliable" a judgement is on the parameter set
+  # Also, in the function minimization, the larger this is, the higher the "resolution" of the function results
+  n_games = 20 # 6 # 1
+
   game_score = np.full([n_games], np.nan )
   for game_i in range(game_score.shape[0]):
-    print("\tGame", game_i+1, game_score.shape[0])
+    #print("\tGame", game_i+1, game_score.shape[0])
 
     env.reset()
 
@@ -261,16 +279,16 @@ def run_game_scoring(settings_ndarray):
       ctrl.observation_all.head(n=_+1).to_csv(fn)
       print("saved matrix to ", fn)
 
-  return game_score.sum()
+  out = game_score.sum()
+  obs_limits.loc[settings_idx[0], settings_idx[1], settings_idx[2]]["stat"] = out
+  print("\tGames won", out, "/", n_games)
+  return out
 
 """
 # grid search
 for settings_i, settings_val in obs_limits.iterrows():
   print(time.ctime(), "settings", settings_i, obs_limits.shape[0])
   obs_limits.loc[settings_i, "stat"] = run_game_scoring(settings_val["cart_position"], settings_val["cart_velocity"], settings_val["pole_angle"]):
-
-import pdb
-pdb.set_trace()
 
 print("best combination is")
 # print(obs_limits.loc[obs_limits['stat'].idxmax()]) # doesn't work in multiple max case
@@ -286,25 +304,30 @@ obs_limits.to_csv("05_obs_limits.csv", index=False)
 
 
 # Test function above
-# print(run_game_scoring(np.array([1, 1, 1])))
+if False:
+	print("test run 1 1 1")
+	print("result", run_game_scoring(np.array([1, 1, 1])))
+	print("test run 3 3 3")
+	print("result", run_game_scoring(np.array([3, 3, 3])))
 
-"""
-Turns out this is for floats and not integers
 
 # Scipy minimization docs
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html#scipy.optimize.minimize
 from scipy.optimize import minimize
 result = minimize(
   lambda x: -1*run_game_scoring(x),
-  np.array([1, 1, 1]),
-  bounds=[(1, 6), (1, 6), (1, 6)],
+  np.array([3, 3, 3]),
+  # bounds=[(1, 6), (1, 6), (1, 6)], # doesnt work with BFGS
   #method='SLSQP',
   #options={'disp': True,'ftol':1.0,}
-  method='Nelder-Mead',
-  options={'xtol': 1e-2, 'disp': True,'ftol':1.0,}
+  #method='Nelder-Mead',
+  #options={'xtol': 1e-2, 'disp': True, 'ftol':1.0, }
+  method='BFGS',
+  options={'disp': True, 'eps': 1}
 
   )
-"""
+
+########################
 
 """
 # Try with hyperopt
@@ -322,6 +345,8 @@ space = hp.choice(
 )
 """
 
+########################
+
 """
 # https://nbviewer.jupyter.org/github/cochoa0x1/intro-mathematical-programming/blob/master/01-introduction/Linear%20Programming.ipynb
 from pulp import *
@@ -335,7 +360,10 @@ prob += objective
 #print(LpStatus[prob.status])
 """
 
-# Scipy minimization docs
+##################################
+
+"""
+# Scipy basinhopping docs
 # https://docs.scipy.org/doc/scipy-0.18.1/reference/generated/scipy.optimize.basinhopping.html
 from scipy.optimize import basinhopping
 
@@ -349,21 +377,39 @@ class MyBounds(object):
         tmin = bool(np.all(x >= self.xmin))
         return tmax and tmin
 
-mybounds = MyBounds([6,6,6], [1,1,1])
-minimizer_kwargs = {"method": "BFGS"}
+class MyTakeStep(object):
+   def __init__(self, s=0.5):
+       self.s = s
+   def __call__(self, x):
+       x += self.s
+       return x
 
+mybounds = MyBounds([6,6,6], [1,1,1])
+mytakestep = MyTakeStep(0.5)
+#minimizer_kwargs = {"method": "BFGS"}
+#minimizer_kwargs = {"method": "L-BFGS-B"}
+
+# eps is for the min search at each hop, whereas the stepsize is for hopping
+minimizer_kwargs = {"options": {"method": "BFGS", "maxiter": 10, "eps": 0.1}}
+
+print('basin hopping')
 result = basinhopping(
-  lambda x: -1*run_game_scoring(x),
+  func = lambda x: -1*run_game_scoring(x),
   x0 = np.array([1, 1, 1]),
   minimizer_kwargs=minimizer_kwargs,
-  stepsize = 1,
-  accept_test=mybounds
+  #stepsize = 1,
+  #take_step=mytakestep,
+  accept_test=mybounds,
+  disp=True
   )
 
 print("global minimum: x = [%.4f, %.4f, %.4f], f(x0) = %.4f" % (ret.x[0],
                                                                 ret.x[1],
                                                                 ret.x[2],
                                                                 ret.fun))
+"""
+
+#####################
 
 import pdb
 pdb.set_trace()
