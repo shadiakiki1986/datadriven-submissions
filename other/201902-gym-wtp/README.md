@@ -1,4 +1,4 @@
-# gym-WTP
+# gym-wtp
 
 [openai/gym](https://github.com/openai/gym) environments to simulate water treatment plant design, operation, and combo (design + operation) and train agents using reinforcement learning to automate these tasks.
 
