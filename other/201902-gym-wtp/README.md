@@ -1,6 +1,6 @@
 # gym-wtp
 
-[openai/gym](https://github.com/openai/gym) environments to simulate
+[openai/gym](https://github.com/openai/gym) environments and reinforcement learning with [rlworkgroup/garage](https://github.com/rlworkgroup/garage/)  to simulate and the neural network (agent) to learn
 
 - water treatment plant design, 
 - water treatment plant operation, 
